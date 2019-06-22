@@ -7,5 +7,6 @@ namespace DesignPatterns.Strategy
         public int UserId { get; set; }
         public int ItemId { get; set; }
         public DateTime PurchaseDate { get; set; }
+        public string Name { get; set; }
     }
 }

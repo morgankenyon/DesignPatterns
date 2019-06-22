@@ -12,26 +12,21 @@ namespace DesignPatterns.Strategy
     public class ApiClient
     {
         private static HttpClient client;
-        private static XmlSerializer serializer;
+        readonly IOrderSummaryRequestBuilder orderSummaryRequestBuilder;
 
         static ApiClient()
         {
             client = new HttpClient();
-            var xRoot = new XmlRootAttribute();
-            xRoot.ElementName = "OrderSummary";
-            serializer = new XmlSerializer(typeof(OrderSummary), xRoot);
+        }
+
+        public ApiClient(IOrderSummaryRequestBuilder orderSummaryRequestBuilder)
+        {
+            this.orderSummaryRequestBuilder = orderSummaryRequestBuilder;
         }
 
         public async Task<HttpStatusCode> SendOrderSummary(string uri, OrderSummary orderSummary)
         {
-            string orderSummaryString;
-            using (StringWriter textWriter = new StringWriter())
-            {
-                serializer.Serialize(textWriter, orderSummary);
-                orderSummaryString = textWriter.ToString();
-            }
-
-            var httpContent = new StringContent(orderSummaryString, Encoding.UTF8, "application/xml");
+            var httpContent = orderSummaryRequestBuilder.Build(orderSummary);
             var response = await client.PostAsync(uri, httpContent);
             return response.StatusCode;
         }

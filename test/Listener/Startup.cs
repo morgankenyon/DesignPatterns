@@ -41,7 +41,6 @@ namespace Listener
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
