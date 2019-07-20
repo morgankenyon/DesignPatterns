@@ -1,4 +1,5 @@
-﻿using DesignPatterns.Factory;
+﻿using DesignPatterns.Facade;
+using DesignPatterns.Factory;
 using DesignPatterns.Strategy;
 using System;
 using System.Threading.Tasks;
@@ -60,6 +61,24 @@ namespace DesignPatterns
 
             await xmlClient.SendOrderSummary(listenUrl, lawnChairOrderSummary);
             await xmlClient.SendOrderSummary(listenUrl, jsonOrderSummary);
+        }
+
+        public static void FacadePattern()
+        {
+            //bad way
+            var nonFacade = new NonFacadeApp();
+            var appHealthy = nonFacade.IsDatabaseAHealthy();
+            appHealthy = appHealthy && nonFacade.IsDatabaseBHealthy();
+            appHealthy = appHealthy && nonFacade.IsServiceAHealthy();
+            appHealthy = appHealthy && nonFacade.IsServiceBHealthy();
+
+            Console.WriteLine($"Is Non Facade App Healthy?: {appHealthy}");
+
+
+            //good way
+            var facade = new FacadeApp();
+            Console.WriteLine($"Is Facade App Healthy?: {facade.IsSystemHealthy()}");
+
         }
     }
 }
