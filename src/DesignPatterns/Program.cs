@@ -1,7 +1,9 @@
 ﻿using DesignPatterns.Facade;
 using DesignPatterns.Factory;
 using DesignPatterns.Strategy;
+using DesignPatterns.Visitor;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DesignPatterns
@@ -12,7 +14,9 @@ namespace DesignPatterns
         static async Task Main(string[] args)
         {
             //await StrategyPattern();
-            await FactoryPattern();
+            //await FactoryPattern();
+            VisitorPattern();
+
         }
 
         public static async Task StrategyPattern()
@@ -79,6 +83,14 @@ namespace DesignPatterns
             var facade = new FacadeApp();
             Console.WriteLine($"Is Facade App Healthy?: {facade.IsSystemHealthy()}");
 
+        }
+
+        public static void VisitorPattern()
+        {
+            var wiki = new WikipediaExample();
+            wiki.Run();
+            Console.ReadKey();
+            
         }
     }
 }
